@@ -1,11 +1,13 @@
 import React from "react";
-import Sidebar from "./Sidebar";
+import Sidebar from "../sidebar/index";
 
 const DashboardLayout = ({ children }) => {
   return (
-    <div className="flex min-h-screen bg-gray-900">
+    <div className="flex min-h-screen bg-gray-900 text-gray-300">
       <Sidebar />
-      <div className="flex-1 ml-64 p-6 overflow-hidden">{children}</div>
+      <div className="flex-1 ml-60 flex flex-col min-h-screen overflow-hidden">
+        {children}
+      </div>
     </div>
   );
 };

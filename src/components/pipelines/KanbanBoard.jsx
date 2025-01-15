@@ -1,31 +1,40 @@
-import React from "react";
-
+import React from 'react';
+import KanbanColumn from './KanbanColumn';
 const KanbanBoard = () => {
+  const columns = [
+    {
+      title: "QUOTE",
+      tasks: [
+        { name: "Kamaru Usman", route: "KTEB > KLAS", date: "Jan 22, 2025", code: "XAFHQ" },
+        { name: "Test", route: "KMIA > KLAS", date: "Jan 16, 2025", code: "XAFHQ" }
+      ]
+    },
+    {
+      title: "BOOK",
+      tasks: [
+        { name: "Jane Doe", route: "VIDP > VECC", date: "Jan 9, 2025", code: "XAFHQ" }
+      ]
+    },
+    {
+      title: "EXECUTE",
+      tasks: [
+        { name: "Khaled", route: "OBBI > OMDW", date: "Jan 1, 2025", code: "XGDRTE" }
+      ]
+    },
+    {
+      title: "POST FLIGHT",
+      tasks: [
+        { name: "Kamaru Usman", route: "LFPB > LSGG", date: "Jan 16, 2025", code: "XAFHQ" }
+      ]
+    }
+  ];
+
   return (
-    <div className="grid grid-cols-3 gap-4">
-      {/* Column 1 */}
-      <div className="bg-gray-700 rounded-lg p-4">
-        <h2 className="text-white font-semibold mb-4">To Do</h2>
-        <div className="space-y-4">
-          <div className="bg-gray-600 p-3 rounded-lg text-white">Task 1</div>
-          <div className="bg-gray-600 p-3 rounded-lg text-white">Task 2</div>
-        </div>
-      </div>
-
-      {/* Column 2 */}
-      <div className="bg-gray-700 rounded-lg p-4">
-        <h2 className="text-white font-semibold mb-4">In Progress</h2>
-        <div className="space-y-4">
-          <div className="bg-gray-600 p-3 rounded-lg text-white">Task 3</div>
-        </div>
-      </div>
-
-      {/* Column 3 */}
-      <div className="bg-gray-700 rounded-lg p-4">
-        <h2 className="text-white font-semibold mb-4">Completed</h2>
-        <div className="space-y-4">
-          <div className="bg-gray-600 p-3 rounded-lg text-white">Task 4</div>
-        </div>
+    <div className="flex-1 p-4">
+      <div className="grid grid-cols-4 gap-4">
+        {columns.map((column, index) => (
+          <KanbanColumn key={index} {...column} />
+        ))}
       </div>
     </div>
   );

@@ -1,17 +1,18 @@
-// components/kanban/KanbanColumn.jsx
+import React from 'react';
 import KanbanCard from './KanbanCard';
 
-const KanbanColumn = ({ title, cards = [] }) => {
+const KanbanColumn = ({ title, tasks }) => {
   return (
-    <div className="flex-1 min-w-[300px]">
-      <h2 className="text-white text-lg mb-4">{title}</h2>
-      <div className="space-y-3">
-        {cards.map((card, index) => (
-          <KanbanCard key={`${card.code}-${index}`} {...card} />
-        ))}
+    <div className="flex-1">
+      <div className="p-2">
+        <h2 className="text-lg font-semibold text-white mb-4">{title}</h2>
+        <div className="space-y-4">
+          {tasks.map((task, index) => (
+            <KanbanCard key={index} {...task} />
+          ))}
+        </div>
       </div>
     </div>
   );
 };
-
 export default KanbanColumn;
