@@ -38,7 +38,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="w-72 bg-gray-900 h-screen flex flex-col fixed left-0 top-0 border-r border-gray-700/50">
+    <div className="w-70 bg-gray-900 h-screen flex flex-col fixed left-0 top-0 border-r border-gray-700/50">
       <Logo />
       <Navigation />
       <UserProfile 

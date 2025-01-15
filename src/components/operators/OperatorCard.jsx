@@ -1,33 +1,32 @@
 import React from 'react';
 import useOperator from '../../hooks/useOperator';
 
-const OperatorCard = () => {
-    const { selectedOperator } = useOperator();
-  
-    if (!selectedOperator) return null;
+const OperatorCard = ({ operator }) => {
+    if (!operator) return null;
   
     return (
-      <div className="absolute top-4 right-4 w-80 bg-gray-900 rounded-lg border border-gray-800 shadow-xl p-4">
-        <h2 className="text-xl font-semibold text-white mb-2">{selectedOperator.name}</h2>
-        <p className="text-gray-400 text-sm mb-4">{selectedOperator.id}</p>
+      <div className="absolute top-4 right-4 w-72 bg-white rounded-lg shadow-lg p-4 z-[1000]">
+        <h2 className="text-lg font-semibold text-gray-900">{operator.name}</h2>
+        <p className="text-sm text-gray-500 mb-3">{operator.id}</p>
         <div className="space-y-2">
           <div className="flex justify-between">
-            <span className="text-gray-400">Category:</span>
-            <span className="text-white">{selectedOperator.category}</span>
+            <span className="text-gray-600">Category:</span>
+            <span className="text-gray-900 font-medium">{operator.category}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-gray-400">Type:</span>
-            <span className="text-white">{selectedOperator.type}</span>
+            <span className="text-gray-600">Type:</span>
+            <span className="text-gray-900 font-medium">{operator.type}</span>
           </div>
-          {selectedOperator.fleetSize && (
+          {operator.fleetSize && (
             <div className="flex justify-between">
-              <span className="text-gray-400">Fleet Size:</span>
-              <span className="text-white">{selectedOperator.fleetSize}</span>
+              <span className="text-gray-600">Fleet Size:</span>
+              <span className="text-gray-900 font-medium">{operator.fleetSize}</span>
             </div>
           )}
         </div>
       </div>
     );
   };
+  
   
   export default OperatorCard;

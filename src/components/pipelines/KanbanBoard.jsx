@@ -30,8 +30,8 @@ const KanbanBoard = () => {
   ];
 
   return (
-    <div className="flex-1 p-4">
-      <div className="grid grid-cols-4 gap-4">
+    <div className="flex-1 p-3">
+      <div className="grid grid-cols-4 gap-3">
         {columns.map((column, index) => (
           <KanbanColumn key={index} {...column} />
         ))}

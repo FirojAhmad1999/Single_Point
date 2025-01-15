@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* Lower the z-index of the map container */
+.leaflet-container {
+    z-index: 0 !important; /* Ensure map stays in the background */
+  }
+  
+  /* Dropdown container with higher z-index */
+  .filter-dropdown {
+    z-index: 1001 !important; /* Dropdown stays above map */
+  }
+  
+  /* Dropdown styles for visibility */
+  select {
+    z-index: 1001;
+    position: relative;
+  }
+  
+  /* Sidebar styling */
+  .sidebar {
+    z-index: 10;
+    background-color: #1e293b;
+    color: white;
+    padding: 20px;
+  }
+  

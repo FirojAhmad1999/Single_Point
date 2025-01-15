@@ -6,9 +6,14 @@ import OperatorsHeader from '../../components/operators/OperatorsHeader';
 const OperatorsPage = () => {
   return (
     <OperatorProvider>
-          <OperatorsHeader />
+      <div className="flex flex-col h-screen bg-gray-900">
+        <OperatorsHeader />
+        <div className="relative flex-1">
           <OperatorsMap />
+        </div>
+      </div>
     </OperatorProvider>
   );
 };
+
 export default OperatorsPage;
