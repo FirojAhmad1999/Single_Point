@@ -1,25 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-// import { useAuth } from '../../context/AuthContext';
 import { useAuth } from '../../hooks/useAuth';
 import AuthLayout from '../layout/AuthLayout';
-import { KeyRound, CheckCircle2 } from 'lucide-react';
+import { KeyRound, Loader, CheckCircle2 } from 'lucide-react';
 
 const OTPVerification = () => {
-  const { verifyOtp, resendOtp } = useAuth(); // Use resendOtp from AuthContext
+  const { verifyOtp, resendOtp } = useAuth();
   const [otp, setOtp] = useState('');
   const [timer, setTimer] = useState(60);
-  const [showSuccess, setShowSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showSuccess, setShowSuccess] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   
   const email = location.state?.email;
   const isSignup = location.state?.isSignup;
 
-  // Redirect to login if email is missing
   useEffect(() => {
     if (!email) {
+      console.log('No email found, redirecting to login');
       navigate('/login');
       return;
     }
@@ -31,56 +31,80 @@ const OTPVerification = () => {
     return () => clearInterval(countdown);
   }, [email, navigate]);
 
+  const handleSuccessRedirect = (path) => {
+    setShowSuccess(true);
+    setTimeout(() => {
+      navigate(path, { replace: true });
+    }, 3000);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-  
+    setLoading(true);
+
     try {
+      if (!otp || otp.length < 4) {
+        setError('Please enter a valid OTP');
+        setLoading(false);
+        return;
+      }
+      
       const isVerified = await verifyOtp(email, otp, !isSignup);
+      
       if (isVerified) {
         if (isSignup) {
-          setShowSuccess(true);
-          setTimeout(() => navigate('/login'), 3000);
+          handleSuccessRedirect('/login');
         } else {
-          navigate('/dashboard', { replace: true });
+          handleSuccessRedirect('/dashboard');
         }
-      } else {
-        setError('Invalid OTP. Please try again.');
       }
     } catch (err) {
-      setError(err.message || 'Something went wrong. Please try again.');
+      console.error('OTP verification error:', err);
+      setError(err.message || 'Invalid OTP. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
   
-
   const handleResendOtp = async () => {
     setError('');
     try {
-      await resendOtp(email); // Resend OTP using email
-      setTimer(60); // Reset timer on successful OTP resend
+      await resendOtp(email);
+      setTimer(60);
     } catch (err) {
+      console.error('Resend OTP error:', err);
       setError(err.message || 'Failed to resend OTP. Please try again.');
     }
   };
-  
 
   if (showSuccess) {
     return (
       <AuthLayout>
-        <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
+        <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-6 transition-all duration-300 ease-in-out">
           <div className="text-center space-y-4">
-             {/* Logo Image */}
-          <div className="mx-auto w-12 h-12 flex items-center justify-center">
-            <img 
-              src="https://blobcntainerinstacharter.blob.core.windows.net/instacharter-az-0125-container/Instacharter_Images/logo/image4.png" 
-              alt="Logo" 
-              className="w-full h-full object-contain"
-            />
-          </div>
-
-            <div className="space-y-2">
-              <h2 className="text-2xl font-bold text-gray-800">Account Created Successfully!</h2>
-              <p className="text-sm text-gray-600">Redirecting you to login page...</p>
+            <div className="mx-auto w-16 h-16 flex items-center justify-center">
+              <img 
+                src="https://blobcntainerinstacharter.blob.core.windows.net/instacharter-az-0125-container/Instacharter_Images/logo/image4.png" 
+                alt="Logo" 
+                className="w-full h-full object-contain"
+              />
+            </div>
+            <div className="flex flex-col items-center space-y-3">
+              <div className="rounded-full bg-green-100 p-3">
+                <CheckCircle2 className="w-8 h-8 text-green-600" />
+              </div>
+              <h2 className="text-2xl font-semibold text-gray-900">
+                {isSignup ? 'Account Created Successfully!' : 'Welcome Back!'}
+              </h2>
+              <p className="text-sm text-gray-600">
+                {isSignup 
+                  ? 'Redirecting you to login page...' 
+                  : 'Setting up your workspace...'}
+              </p>
+              <div className="mt-4">
+                <div className="w-8 h-8 border-4 border-blue-200 rounded-full animate-spin border-t-blue-600"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -92,7 +116,6 @@ const OTPVerification = () => {
     <AuthLayout>
       <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
         <div className="text-center space-y-4">
-          {/* Logo Image */}
           <div className="mx-auto w-12 h-12 flex items-center justify-center">
             <img 
               src="https://blobcntainerinstacharter.blob.core.windows.net/instacharter-az-0125-container/Instacharter_Images/logo/image4.png" 
@@ -131,15 +154,24 @@ const OTPVerification = () => {
                 onChange={(e) => setOtp(e.target.value)}
                 className="block w-full pl-10 px-3 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Enter verification code"
+                disabled={loading}
               />
             </div>
           </div>
 
           <button
             type="submit"
-            className="w-full py-2.5 px-4 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
+            disabled={loading}
+            className="w-full py-2.5 px-4 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200 flex items-center justify-center space-x-2"
           >
-            Verify OTP
+            {loading ? (
+              <>
+                <Loader className="w-4 h-4 animate-spin" />
+                <span>Verifying...</span>
+              </>
+            ) : (
+              'Verify OTP'
+            )}
           </button>
         </form>
         
@@ -152,6 +184,7 @@ const OTPVerification = () => {
             <button
               onClick={handleResendOtp}
               className="text-sm text-blue-600 font-medium hover:text-blue-500 transition-colors duration-200"
+              disabled={loading}
             >
               Resend verification code
             </button>

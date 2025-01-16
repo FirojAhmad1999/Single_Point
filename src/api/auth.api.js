@@ -5,8 +5,8 @@ export const authApi = {
   login: (email) => api.post('Account/SignIn', { email }),
   validateSignupOtp: (email, otp) =>
     api.patch(`Account/ValidateSignupOTP?email=${encodeURIComponent(email)}&opt=${encodeURIComponent(otp)}`),
- validateSigninOtp: (email, otp) =>
-  api.patch(`Account/ValidateSignInOTP?email=${encodeURIComponent(email)}&opt=${encodeURIComponent(otp)}`),
-
-  resendOtp: (email) =>  api.patch(`Account/ValidateSignInOTP?email=${encodeURIComponent(email)}`),
+  validateSigninOtp: (email, otp) =>
+    api.patch(`Account/ValidateSignInOTP?email=${encodeURIComponent(email)}&opt=${encodeURIComponent(otp)}`),
+  resendOtp: (email) => 
+    api.patch(`Account/ResendOTP?email=${encodeURIComponent(email)}`)
 };

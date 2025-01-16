@@ -1,25 +1,22 @@
+// UserProfile.jsx
 import React from 'react';
 import { User, LogOut } from 'lucide-react';
 
-const UserProfile = ({ userData, onSignOut, onViewProfile, isDropdownOpen, setIsDropdownOpen }) => {
+const UserProfile = ({ user, onSignOut, onViewProfile, isDropdownOpen, setIsDropdownOpen }) => {
   return (
     <div className="relative px-6 py-4 border-t border-gray-700/50 bg-gray-800/50">
-      <button 
+      <button
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
         className="w-full flex items-center focus:outline-none group"
       >
         <div className="w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center">
           <span className="text-white text-sm font-medium">
-            {userData?.name?.charAt(0)}
+            {user?.name?.charAt(0)}
           </span>
         </div>
         <div className="ml-3 flex-1 text-left">
-          <p className="text-sm font-medium text-white truncate">
-            {userData?.name}
-          </p>
-          <p className="text-xs text-gray-400 truncate">
-            {userData?.email}
-          </p>
+          <p className="text-sm font-medium text-white truncate">{user?.name}</p>
+          <p className="text-xs text-gray-400 truncate">{user?.email}</p>
         </div>
       </button>
 
