@@ -1,8 +1,8 @@
 import React from 'react';
 import { NavItem } from './NavItem';
-import { 
-  LayoutGrid, Ship, FileText, Building2, 
-  Users, CheckSquare, Archive, History 
+import {
+  LayoutGrid, Ship, FileText, Building2,
+  Users, CheckSquare, Archive, History
 } from 'lucide-react';
 
 const Navigation = () => {

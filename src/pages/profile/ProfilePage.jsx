@@ -1,14 +1,13 @@
-import React, { useEffect } from "react";
-import ProfileLayout from "../../components/layout/ProfileLayout";
+import React from "react";
 import ProfileHeader from "../../components/profile/ProfileHeader";
 import ProfileDetails from "../../components/profile/UserProfile";
 
 const ProfilePage = () => {
   return (
-    <ProfileLayout>
+    <div className="flex flex-col h-screen">
       <ProfileHeader />
       <ProfileDetails />
-    </ProfileLayout>
+    </div>
   );
 };
 

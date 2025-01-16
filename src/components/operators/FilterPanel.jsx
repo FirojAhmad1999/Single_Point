@@ -29,10 +29,7 @@ const FilterPanel = () => {
       {isOpen && (
         <div
           className="absolute top-12 right-0 w-64 bg-gray-600 rounded-lg shadow-lg border border-gray-700 p-4"
-          style={{
-            zIndex: 1000, // Ensure it appears above the map
-            position: "absolute", // Prevent going under map
-          }}
+          style={{ zIndex: 1000 }}
         >
           <select className="w-full p-2 mb-3 bg-gray-700 text-gray-200 rounded border border-gray-600">
             <option value="">All Categories</option>
@@ -45,4 +42,4 @@ const FilterPanel = () => {
   );
 };
 
-export default FilterPanel;
+export default FilterPanel

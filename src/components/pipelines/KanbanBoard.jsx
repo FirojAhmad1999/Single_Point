@@ -1,5 +1,6 @@
 import React from 'react';
 import KanbanColumn from './KanbanColumn';
+
 const KanbanBoard = () => {
   const columns = [
     {
@@ -30,12 +31,10 @@ const KanbanBoard = () => {
   ];
 
   return (
-    <div className="flex-1 p-3">
-      <div className="grid grid-cols-4 gap-3">
-        {columns.map((column, index) => (
-          <KanbanColumn key={index} {...column} />
-        ))}
-      </div>
+    <div className="grid grid-cols-4 gap-4 p-4">
+      {columns.map((column, index) => (
+        <KanbanColumn key={index} {...column} />
+      ))}
     </div>
   );
 };

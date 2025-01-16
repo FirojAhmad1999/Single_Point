@@ -1,4 +1,3 @@
-// Sidebar.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
@@ -22,7 +21,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="w-70 bg-gray-900 h-screen flex flex-col fixed left-0 top-0 border-r border-gray-700/50">
+    <div className="w-60 bg-gray-900 h-screen flex flex-col fixed left-0 top-0 border-r border-gray-700/50">
       <Logo />
       <Navigation />
       <UserProfile

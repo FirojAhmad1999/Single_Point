@@ -1,12 +1,10 @@
-import { ProtectedRoute } from './ProtectedRoute';
-import DashboardLayout from '../components/layout/DashboardLayout';
+import React from "react";
+import { ProtectedRoute } from "./ProtectedRoute";
 
-export const ProtectedRouteWithLayout = ({ children }) => {
+export const ProtectedRouteWithLayout = ({ children, layout: Layout }) => {
   return (
     <ProtectedRoute>
-      <DashboardLayout>
-        {children}
-      </DashboardLayout>
+      <Layout>{children}</Layout>
     </ProtectedRoute>
   );
 };

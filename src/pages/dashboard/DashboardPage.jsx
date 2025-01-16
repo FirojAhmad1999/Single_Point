@@ -1,15 +1,18 @@
 import React from 'react';
-import DashboardLayout from '../../components/layout/DashboardLayout';
-import DashboardHeader from '../../components/header/DashboardHeader';
+import { PipelineProvider } from '../../context/PipelineContext';
+import PipelineHeader from '../../components/pipelines/PipelineHeader';
 import KanbanBoard from '../../components/pipelines/KanbanBoard';
-
 
 const DashboardPage = () => {
   return (
-    <DashboardLayout>
-      <DashboardHeader />
-      <KanbanBoard />
-    </DashboardLayout>
+    <PipelineProvider>
+      <div className="flex flex-col h-screen">
+        <PipelineHeader />
+        <div className="relative flex-1">
+          <KanbanBoard />
+        </div>
+      </div>
+    </PipelineProvider>
   );
 };
 
