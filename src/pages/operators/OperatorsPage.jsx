@@ -6,7 +6,7 @@ const OperatorsPage = () => {
   return (
     <div className="flex flex-col h-screen">
       <OperatorsHeader />
-      <div className="relative flex-1">
+      <div className="">
         <OperatorsMap />
       </div>
     </div>

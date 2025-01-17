@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 /* Lower the z-index of the map container */
 .leaflet-container {
     z-index: 0 !important; /* Ensure map stays in the background */
@@ -23,5 +24,14 @@
     background-color: #1e293b;
     color: white;
     padding: 20px;
+  }
+  .marker-label {
+    background-color: #4285F4;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
   }
   

@@ -3,21 +3,11 @@ import api from './axios.config';
 export const operatorService = {
   async fetchOperators() {
     try {
-      const response = await api.get('/operators');
-      return response.data;
+      const response = await api.get('/SinglePoint/GetAllOpreaterDetails');
+      return response.data.data; // Access `data` directly from the response
     } catch (error) {
       console.error('Error fetching operators:', error);
       throw error;
     }
   },
-  
-  async fetchOperatorById(id) {
-    try {
-      const response = await api.get(`/operators/${id}`);
-      return response.data;
-    } catch (error) {
-      console.error(`Error fetching operator ${id}:`, error);
-      throw error;
-    }
-  }
 };
