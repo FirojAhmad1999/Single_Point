@@ -174,11 +174,11 @@ const OperatorMap = () => {
         </div>
       )}
       <GoogleMap
-        mapContainerStyle={mapStyles}
-        center={{ lat: 20, lng: 0 }}
-        zoom={2}
-        options={mapOptions}
-        onLoad={onMapLoad}
+       mapContainerStyle={mapStyles}
+       center={{ lat: 0, lng: 0 }}
+       zoom={2}
+       options={mapOptions}
+       onLoad={onMapLoad}
       >
         {selectedOperator && markerPosition && (
           <div
