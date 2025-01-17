@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { operatorService } from '../../api/operatorService';
+import { useNavigate } from 'react-router-dom';
 
 const GOOGLE_MAPS_LIBRARIES = ['marker'];
 
@@ -20,8 +21,10 @@ const mapStyles = {
 };
 
 const OperatorMap = () => {
+  const navigate = useNavigate();
   const [operators, setOperators] = useState([]);
   const [selectedOperator, setSelectedOperator] = useState(null);
+  const [markerPosition, setMarkerPosition] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const mapInstanceRef = useRef(null);
@@ -61,6 +64,14 @@ const OperatorMap = () => {
     };
   }, []);
 
+  const handleOperatorCardClick = async (operator) => {
+    try {
+      navigate(`/operator-details/${operator.comId}`);
+    } catch (error) {
+      console.error('Error navigating to operator details:', error);
+    }
+  };
+
   const createMarkers = useCallback(() => {
     if (!window.google || !mapInstanceRef.current) return;
 
@@ -76,7 +87,6 @@ const OperatorMap = () => {
           lng: parseFloat(operator.com_long),
         };
 
-        // Create marker element
         const markerElement = document.createElement('div');
         markerElement.innerHTML = `
           <svg viewBox="0 0 24 24" width="24" height="24" fill="#4285F4" stroke="#FFFFFF" stroke-width="1.5">
@@ -84,7 +94,6 @@ const OperatorMap = () => {
           </svg>
         `;
 
-        // Create advanced marker
         const marker = new window.google.maps.marker.AdvancedMarkerElement({
           map: mapInstanceRef.current,
           position,
@@ -92,12 +101,29 @@ const OperatorMap = () => {
           title: operator.name,
         });
 
-        // Add click listener
-        marker.addListener('click', () => {
+        marker.addListener('click', (e) => {
+          // Get the pixel coordinates of the clicked marker
+          const scale = Math.pow(2, mapInstanceRef.current.getZoom());
+          const projection = mapInstanceRef.current.getProjection();
+          const bounds = mapInstanceRef.current.getBounds();
+          
+          if (projection && bounds) {
+            const point = projection.fromLatLngToPoint(new google.maps.LatLng(position));
+            const center = projection.fromLatLngToPoint(bounds.getCenter());
+            const worldPoint = new google.maps.Point(
+              (point.x - center.x) * scale + mapInstanceRef.current.getDiv().offsetWidth / 2,
+              (point.y - center.y) * scale + mapInstanceRef.current.getDiv().offsetHeight / 2
+            );
+
+            setMarkerPosition({
+              x: worldPoint.x,
+              y: worldPoint.y
+            });
+          }
+          
           setSelectedOperator(operator);
         });
 
-        // Store marker reference
         const markerId = operator.id || `${operator.com_Lat}-${operator.com_long}-${index}`;
         markersRef.current[markerId] = marker;
       });
@@ -154,18 +180,23 @@ const OperatorMap = () => {
         options={mapOptions}
         onLoad={onMapLoad}
       >
-        {selectedOperator && (
+        {selectedOperator && markerPosition && (
           <div
-            className="absolute p-4 bg-white rounded-lg shadow-lg max-w-xs"
+            className="absolute p-4 bg-white rounded-lg shadow-lg max-w-xs cursor-pointer hover:bg-gray-50 transition-colors"
             style={{
-              left: '50%',
-              top: '50%',
+              left: `${markerPosition.x}px`,
+              top: `${markerPosition.y}px`, // Offset above the marker
               transform: 'translate(-50%, -100%)',
               zIndex: 1000
             }}
+            onClick={() => handleOperatorCardClick(selectedOperator)}
           >
             <button
-              onClick={() => setSelectedOperator(null)}
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedOperator(null);
+                setMarkerPosition(null);
+              }}
               className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
             >
               ×
@@ -184,9 +215,7 @@ const OperatorMap = () => {
               </div>
               <div className="flex items-center text-gray-700">
                 <span className="font-semibold mr-2">Role:</span>
-                <span>
-                  {selectedOperator.role}
-                </span>
+                <span>{selectedOperator.role}</span>
               </div>
             </div>
           </div>

@@ -11,6 +11,8 @@ import { Navigate } from "react-router-dom";
 import DashboardLayout from "../components/layout/DashboardLayout";
 import OperatorLayout from "../components/layout/OperatorLayout";
 import ProfileLayout from "../components/layout/ProfileLayout";
+import OperatorsDetailsLayout from "../components/layout/OperatorsDetailsLayout";
+import OperatorDetailsPage from "../pages/OperatorsDetails/OperatorsDetailsPage";
 
 export const routes = [
   // Public Routes
@@ -47,6 +49,19 @@ export const routes = [
       </ProtectedRouteWithLayout>
     ),
   },
+
+
+  // {
+  //   path: '/operator-details/:comId',
+  //   element: (
+  //     <ProtectedRouteWithLayout layout={OperatorsDetailsLayout}>
+  //       <OperatorProvider>
+  //         <OperatorDetailsPage />
+  //       </OperatorProvider>
+  //     </ProtectedRouteWithLayout>
+  //   ),
+  // },
+
 
   {
     path: "/profile",

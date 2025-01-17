@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { OperatorContext } from '../context/OperatorContext';
 
-const useOperator = () => {
+export const useOperator = () => {
   const context = useContext(OperatorContext);
   
   if (!context) {
@@ -11,4 +11,3 @@ const useOperator = () => {
   return context;
 };
 
-export default useOperator;

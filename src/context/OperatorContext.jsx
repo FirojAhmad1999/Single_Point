@@ -1,32 +1,12 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { operatorService } from '../api/operatorService'; // Import the service
 
-// Mock data
-const mockOperators = [
-  {
-    id: '1',
-    name: 'A2B Heli Charters',
-    latitude: 50.8335048,
-    longitude: -0.2906166,
-    category: 'Helicopter',
-    type: 'Operator,Broker',
-    fleetSize: 5
-  },
-  {
-    id: '2',
-    name: 'Sky Aviation',
-    latitude: 40.7128,
-    longitude: -74.0060,
-    category: 'Airplane',
-    type: 'Operator',
-    fleetSize: 8
-  }
-];
 
 // Export the context so it can be imported by the hook
 export const OperatorContext = createContext();
 
 export const OperatorProvider = ({ children }) => {
-  const [operators, setOperators] = useState(mockOperators);
+  const [operators, setOperators] = useState([]);
   const [selectedOperator, setSelectedOperator] = useState(null);
   const [filters, setFilters] = useState({
     search: '',
@@ -36,18 +16,23 @@ export const OperatorProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchOperators = () => {
+  // Fetch operators using the service
+  const fetchOperators = async () => {
     setLoading(true);
     try {
-      setTimeout(() => {
-        setOperators(mockOperators);
-        setLoading(false);
-      }, 500);
+      const data = await operatorService.fetchOperators();
+      setOperators(data);
+      setLoading(false);
     } catch (err) {
+      console.error('Error fetching operators:', err);
       setError('Failed to load operators');
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchOperators(); // Fetch operators on component mount
+  }, []);
 
   const selectOperator = (id) => {
     const operator = operators.find(op => op.id === id);

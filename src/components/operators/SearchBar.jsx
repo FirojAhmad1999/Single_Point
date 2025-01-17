@@ -1,6 +1,6 @@
 import React from 'react';
 import { SearchIcon } from 'lucide-react';
-import useOperator from '../../hooks/useOperator';
+import {useOperator} from '../../hooks/useOperator';
 
 const SearchBar = () => {
   const { filters, updateFilters } = useOperator();
