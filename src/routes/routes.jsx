@@ -51,16 +51,16 @@ export const routes = [
   },
 
 
-  // {
-  //   path: '/operator-details/:comId',
-  //   element: (
-  //     <ProtectedRouteWithLayout layout={OperatorsDetailsLayout}>
-  //       <OperatorProvider>
-  //         <OperatorDetailsPage />
-  //       </OperatorProvider>
-  //     </ProtectedRouteWithLayout>
-  //   ),
-  // },
+  {
+    path: '/operator-details/:comId',
+    element: (
+      <ProtectedRouteWithLayout layout={OperatorsDetailsLayout}>
+        <OperatorProvider>
+          <OperatorDetailsPage />
+        </OperatorProvider>
+      </ProtectedRouteWithLayout>
+    ),
+  },
 
 
   {

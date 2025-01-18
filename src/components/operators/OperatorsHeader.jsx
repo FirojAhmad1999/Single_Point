@@ -1,19 +1,14 @@
 import React from 'react';
-import SearchBar from './SearchBar';
-import FilterPanel from './FilterPanel';
+import CountryDropdown from './CountryDropdown';
+import CityDropdown from './CityDropdown';
+import CategoryDropdown from './CategoryDropdown';
 
 const OperatorsHeader = () => {
   return (
-    <div className="h-10 border-b border-gray-800 flex items-center justify-between px-6 bg-gray-900 z-10">
-      <div className="flex items-center text-gray-400 mb-10 sticky">
-        <span>Operators</span>
-        <span className="mx-2">/</span>
-        <span>Map</span>
-      </div>
-      <div className="flex items-center space-x-4 mb-10 sticky">
-        <SearchBar />
-        <FilterPanel />
-      </div>
+    <div className="flex items-start gap-8 px-6 py-1 bg-gray-900 border-b border-gray-800">
+      <CountryDropdown />
+      <CityDropdown />
+      <CategoryDropdown />
     </div>
   );
 };

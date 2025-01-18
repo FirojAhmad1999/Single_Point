@@ -1,12 +1,15 @@
 import React from "react";
 import ProfileHeader from "../../components/profile/ProfileHeader";
-import ProfileDetails from "../../components/profile/UserProfile";
+
+import CompanyDetails from "../../components/profile/CompanyDetails";
 
 const ProfilePage = () => {
   return (
     <div className="flex flex-col h-screen">
       <ProfileHeader />
-      <ProfileDetails />
+      <div className="relative flex-1">
+      <CompanyDetails />
+      </div>
     </div>
   );
 };

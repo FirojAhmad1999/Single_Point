@@ -5,6 +5,7 @@ import { useAuth } from '../../hooks/useAuth';
 import AuthLayout from '../layout/AuthLayout';
 import { User, Mail, Loader } from 'lucide-react';
 
+
 const SignupForm = () => {
   const { signup } = useAuth();
   const navigate = useNavigate();
